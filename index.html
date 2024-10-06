@@ -8,20 +8,19 @@
   </head>
   <body>
     <div id="choropleth_map"></div>
+    <br />
     <div id="evolution_chart"></div>
 
     <script type="text/javascript">
-      var spec2 = "js/map.vg.json";
-      vegaEmbed("#choropleth_map", spec2)
+      var map = "js/map.vg.json";
+      vegaEmbed("#choropleth_map", map)
         .then(function (result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         })
         .catch(console.error);
-    </script>
 
-    <script type="text/javascript">
-      var spec2 = "js/evolution.vg.json";
-      vegaEmbed("#evolution_chart", spec2)
+      var evolutionChart = "js/evolution.vg.json";
+      vegaEmbed("#evolution_chart", evolutionChart)
         .then(function (result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         })
