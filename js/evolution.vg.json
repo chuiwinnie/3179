@@ -1,0 +1,49 @@
+{
+  "title": "Evolution of Billionaires",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Evolution_Data.csv"
+  },
+  "transform": [
+    {
+      "aggregate": [
+        { "op": "sum", "field": "Net Worth", "as": "Total Net Worth" },
+        { "op": "count", "as": "Number of Billionaires" }
+      ],
+      "groupby": ["Year"]
+    }
+  ],
+  "layer": [
+    {
+      "mark": "line",
+      "encoding": {
+        "x": { "field": "Year", "type": "temporal" },
+        "y": {
+          "field": "Total Net Worth",
+          "type": "quantitative",
+          "title": "Total Net Worth (Billions)",
+          "axis": { "titleColor": "#1f77b4" }
+        },
+        "color": { "value": "#1f77b4" }
+      }
+    },
+    {
+      "mark": "line",
+      "encoding": {
+        "x": { "field": "Year", "type": "temporal" },
+        "y": {
+          "field": "Number of Billionaires",
+          "type": "quantitative",
+          "title": "Number of Billionaires",
+          "axis": { "titleColor": "#ff7f0e" }
+        },
+        "color": { "value": "#ff7f0e" }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": { "y": "independent" }
+  }
+}
