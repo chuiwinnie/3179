@@ -61,7 +61,7 @@
           "field": "Log Total Net Worth",
           "type": "quantitative",
           "scale": {
-            "type": "sequential",
+            "type": "linear",
             "scheme": "greenblue"
           },
           "legend": {

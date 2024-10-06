@@ -1,45 +1,98 @@
 {
   "title": "Evolution of Billionaires",
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 800,
+  "width": 700,
   "height": 400,
   "data": {
     "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Evolution_Data.csv"
   },
   "transform": [
     {
+      "calculate": "toNumber(datum.Year)",
+      "as": "Year_numeric"
+    },
+    {
       "aggregate": [
         { "op": "sum", "field": "Net Worth", "as": "Total Net Worth" },
         { "op": "count", "as": "Number of Billionaires" }
       ],
-      "groupby": ["Year"]
+      "groupby": ["Year_numeric"]
+    },
+    {
+      "filter": "datum.Year_numeric <= yearRange"
+    },
+    {
+      "calculate": "'$' + format(datum['Total Net Worth'], ',.1f') + 'B'",
+      "as": "Formatted Net Worth"
+    }
+  ],
+  "params": [
+    {
+      "name": "yearRange",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "min": 1998,
+        "max": 2024,
+        "step": 1,
+        "name": "Year Range: "
+      }
     }
   ],
   "layer": [
     {
       "mark": "line",
       "encoding": {
-        "x": { "field": "Year", "type": "temporal" },
+        "x": {
+          "field": "Year_numeric",
+          "type": "quantitative",
+          "axis": { "format": "d", "title": "Year" }
+        },
         "y": {
           "field": "Total Net Worth",
           "type": "quantitative",
-          "title": "Total Net Worth (Billions)",
-          "axis": { "titleColor": "#1f77b4" }
+          "title": "Total Net Worth (USD)",
+          "axis": {
+            "titleColor": "#1f77b4",
+            "format": "$,.1f",
+            "labelExpr": "'$' + format(datum.value, ',.0f') + 'B'"
+          }
         },
-        "color": { "value": "#1f77b4" }
+        "color": { "value": "#1f77b4" },
+        "tooltip": [
+          { "field": "Year_numeric", "type": "quantitative", "title": "Year" },
+          {
+            "field": "Formatted Net Worth",
+            "type": "nominal",
+            "title": "Total Net Worth"
+          }
+        ]
       }
     },
     {
       "mark": "line",
       "encoding": {
-        "x": { "field": "Year", "type": "temporal" },
+        "x": {
+          "field": "Year_numeric",
+          "type": "quantitative",
+          "axis": { "format": "d", "title": "Year" }
+        },
         "y": {
           "field": "Number of Billionaires",
           "type": "quantitative",
           "title": "Number of Billionaires",
           "axis": { "titleColor": "#ff7f0e" }
         },
-        "color": { "value": "#ff7f0e" }
+        "color": { "value": "#ff7f0e" },
+        "tooltip": [
+          { "field": "Year_numeric", "type": "quantitative", "title": "Year" },
+          {
+            "field": "Number of Billionaires",
+            "type": "quantitative",
+            "title": "Number of Billionaires",
+            "format": ",.0f"
+          }
+        ]
       }
     }
   ],
