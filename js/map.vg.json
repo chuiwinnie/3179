@@ -35,16 +35,20 @@
           }
         },
         {
-          "calculate": "isValid(datum.Total_Net_Worth) ? datum.Total_Net_Worth : 0",
+          "calculate": "datum.Total_Net_Worth",
           "as": "Total Net Worth"
         },
         {
-          "calculate": "datum.Number_of_Billionaires != null ? datum.Number_of_Billionaires : 0",
-          "as": "Number of Billionaires"
+          "calculate": "log(datum['Total Net Worth'] + 1) - 23 < 0 ? 0 : log(datum['Total Net Worth'] + 1) - 23",
+          "as": "Log Total Net Worth"
         },
         {
           "calculate": "datum['Total Net Worth'] >= 1e9 ? '$' + format(datum['Total Net Worth'] / 1e9, '.1f') + 'B' : '$0B'",
           "as": "Formatted Total Net Worth"
+        },
+        {
+          "calculate": "datum.Number_of_Billionaires != null ? datum.Number_of_Billionaires : 0",
+          "as": "Number of Billionaires"
         }
       ],
       "mark": {
@@ -54,29 +58,16 @@
       },
       "encoding": {
         "color": {
-          "field": "Total Net Worth",
+          "field": "Log Total Net Worth",
           "type": "quantitative",
           "scale": {
-            "type": "threshold",
-            "domain": [
-              1000000000, 10000000000, 100000000000, 500000000000, 750000000000,
-              1000000000000, 2500000000000, 5000000000000
-            ],
-            "range": [
-              "#eef8eb",
-              "#d4eece",
-              "#9fdab8",
-              "#7accc4",
-              "#57b8d0",
-              "#389bc6",
-              "#1d7eb7",
-              "#085fa3",
-              "#064372"
-            ]
+            "type": "sequential",
+            "scheme": "greenblue"
           },
           "legend": {
             "title": "Total Net Worth (USD)",
-            "labelExpr": "datum.value >= 1e9 ? '$' + format(datum.value / 1e9, '.0f') + 'B' : ''"
+            "labelExpr": "datum.value == 0 ? '$0B' : datum.value == 2 ? '$10B' : datum.value == 4 ? '$50B' : datum.value == 6 ? '$500B' : datum.value == 8 ? '$5000B' : ''",
+            "values": [0, 2, 4, 6, 8]
           }
         },
         "tooltip": [
