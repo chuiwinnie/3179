@@ -64,7 +64,7 @@
           {
             "field": "Formatted Net Worth",
             "type": "nominal",
-            "title": "Total Net Worth"
+            "title": "Total Net Worth (USD)"
           }
         ]
       }
