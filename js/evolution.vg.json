@@ -94,6 +94,94 @@
           }
         ]
       }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontStyle": "italic"
+      },
+      "transform": [{ "filter": "datum.Year_numeric === 2024" }],
+      "encoding": {
+        "text": {
+          "value": [
+            "Impact of GFC:",
+            "The Global Financial Crisis led to severe",
+            "economic downturns worldwide, resulting in",
+            "significant losses in wealth for many billionaires",
+            "due to stock market crashes and decreased",
+            "asset values."
+          ]
+        },
+        "x": { "value": 220 },
+        "y": { "value": 100 }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "color": "black"
+      },
+      "transform": [{ "filter": "datum.Year_numeric === 2024" }],
+      "encoding": {
+        "x": {
+          "value": 295
+        },
+        "y": {
+          "value": 165
+        },
+        "x2": {
+          "value": 325
+        },
+        "y2": {
+          "value": 290
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontStyle": "italic"
+      },
+      "transform": [{ "filter": "datum.Year_numeric === 2024" }],
+      "encoding": {
+        "text": {
+          "value": [
+            "Impact of Global Pandemic:",
+            "The COVID-19 pandemic caused a global",
+            "economic shock, leading to reduced consumer",
+            "spending and significant declines in sectors",
+            "like travel and hospitality, which affected",
+            "billionaires' net worth."
+          ]
+        },
+        "x": { "value": 470 },
+        "y": { "value": 300 }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "color": "black"
+      },
+      "transform": [{ "filter": "datum.Year_numeric === 2024" }],
+      "encoding": {
+        "x": {
+          "value": 550
+        },
+        "y": {
+          "value": 290
+        },
+        "x2": {
+          "value": 600
+        },
+        "y2": {
+          "value": 205
+        }
+      }
     }
   ],
   "resolve": {
