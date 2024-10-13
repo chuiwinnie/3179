@@ -22,6 +22,12 @@
     <br />
     <br />
 
+    <div id="bar_chart"></div>
+
+    <br />
+    <br />
+    <br />
+
     <script type="text/javascript">
       var map = "js/map.vg.json";
       vegaEmbed("#choropleth_map", map)
@@ -32,6 +38,13 @@
 
       var evolutionChart = "js/evolution.vg.json";
       vegaEmbed("#evolution_chart", evolutionChart)
+        .then(function (result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        })
+        .catch(console.error);
+
+      var barChart = "js/top_billionaires.vg.json";
+      vegaEmbed("#bar_chart", barChart)
         .then(function (result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         })

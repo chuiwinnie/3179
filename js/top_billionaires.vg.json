@@ -1,0 +1,69 @@
+{
+  "title": "Top 10 Billionaires by Net Worth (2024)",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum['Net Worth'])",
+      "as": "Net Worth"
+    },
+    {
+      "calculate": "datum['Net Worth'] >= 1e9 ? '$' + format(datum['Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
+      "as": "Formatted Net Worth"
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "Net Worth Rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "Net Worth",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum['Net Worth Rank'] <= 10"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "color": "forestgreen"
+  },
+  "encoding": {
+    "x": {
+      "field": "Name",
+      "type": "nominal",
+      "axis": {
+        "labelAngle": -45,
+        "title": "Billionaire"
+      },
+      "sort": null
+    },
+    "y": {
+      "field": "Net Worth",
+      "type": "quantitative",
+      "title": "Net Worth (USD)",
+      "axis": {
+        "format": "$,.1f",
+        "labelExpr": "'$' + format(datum.value/1000000000, ',.0f') + 'B'"
+      }
+    },
+    "tooltip": [
+      { "field": "Name", "type": "nominal", "title": "Billionaire" },
+      {
+        "field": "Formatted Net Worth",
+        "type": "nominal",
+        "title": "Net Worth (USD)"
+      }
+    ]
+  }
+}
