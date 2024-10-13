@@ -43,7 +43,7 @@
           "as": "Log Total Net Worth"
         },
         {
-          "calculate": "datum['Total Net Worth'] >= 1e9 ? '$' + format(datum['Total Net Worth'] / 1e9, '.1f') + 'B' : '$0B'",
+          "calculate": "datum['Total Net Worth'] >= 1e9 ? '$' + format(datum['Total Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
           "as": "Formatted Total Net Worth"
         },
         {
