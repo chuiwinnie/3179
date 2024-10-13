@@ -1,5 +1,5 @@
 {
-  "title": "Top 10 Billionaires by Net Worth (2024)",
+  "title": "Top Billionaires by Net Worth",
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 800,
   "height": 400,
@@ -7,7 +7,23 @@
     "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
     "format": { "type": "csv" }
   },
+  "params": [
+    {
+      "name": "topN",
+      "value": 20,
+      "bind": {
+        "input": "range",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "name": "Top # Billionaires: "
+      }
+    }
+  ],
   "transform": [
+    {
+      "filter": "datum['Net Worth'] != null"
+    },
     {
       "calculate": "toNumber(datum['Net Worth'])",
       "as": "Net Worth"
@@ -31,7 +47,7 @@
       ]
     },
     {
-      "filter": "datum['Net Worth Rank'] <= 10"
+      "filter": "datum['Net Worth Rank'] <= topN"
     }
   ],
   "mark": {
@@ -65,5 +81,10 @@
         "title": "Net Worth (USD)"
       }
     ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }
