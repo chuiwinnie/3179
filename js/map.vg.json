@@ -28,7 +28,7 @@
           "lookup": "properties.NAME",
           "from": {
             "data": {
-              "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Map_Data.csv"
+              "url": "../data/Billionaires_Data.csv"
             },
             "key": "Country",
             "fields": ["Total_Net_Worth", "Number_of_Billionaires"]
