@@ -67,6 +67,10 @@
             {
               "calculate": "datum.Number_of_Billionaires != null ? datum.Number_of_Billionaires : 0",
               "as": "Number of Billionaires"
+            },
+            {
+              "calculate": "datum.properties.NAME",
+              "as": "selected"
             }
           ],
           "mark": {
@@ -105,13 +109,25 @@
                 "title": "Number of Billionaires"
               }
             ]
-          }
+          },
+          "params": [
+            {
+              "name": "selectedCountry",
+              "select": {
+                "type": "point",
+                "fields": ["selected"],
+                "on": "click"
+              }
+            }
+          ]
         }
       ]
     },
     {
       "title": {
-        "text": { "expr": "'Top ' + topN + ' Billionaires by Net Worth'" }
+        "text": {
+          "expr": "selectedCountry.selected ? 'Top ' + topN + ' Billionaires in ' + selectedCountry.selected[0] : 'Top ' + topN + ' Billionaires Globally'"
+        }
       },
       "width": 800,
       "height": 400,
@@ -130,6 +146,9 @@
         {
           "calculate": "datum['Net Worth'] >= 1e9 ? '$' + format(datum['Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
           "as": "Formatted Net Worth"
+        },
+        {
+          "filter": "!selectedCountry.selected || datum.Country == selectedCountry.selected[0] "
         },
         {
           "window": [
