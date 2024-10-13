@@ -1,0 +1,186 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "params": [
+    {
+      "name": "topN",
+      "value": 20,
+      "bind": {
+        "input": "range",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "name": "Top # Billionaires: "
+      }
+    }
+  ],
+  "vconcat": [
+    {
+      "title": "Global Distribution of Billionaire Wealth",
+      "width": 800,
+      "height": 400,
+      "layer": [
+        {
+          "data": {
+            "graticule": true
+          },
+          "mark": {
+            "type": "geoshape",
+            "stroke": "#ccc",
+            "strokeWidth": 0.5
+          },
+          "projection": {
+            "type": "equalEarth"
+          }
+        },
+        {
+          "projection": { "type": "equalEarth" },
+          "data": {
+            "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/js/ne_50m.json",
+            "format": {
+              "type": "topojson",
+              "feature": "ne_50m_admin_0_countries"
+            }
+          },
+          "transform": [
+            {
+              "lookup": "properties.NAME",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv"
+                },
+                "key": "Country",
+                "fields": ["Total_Net_Worth", "Number_of_Billionaires"]
+              }
+            },
+            {
+              "calculate": "datum.Total_Net_Worth",
+              "as": "Total Net Worth"
+            },
+            {
+              "calculate": "log(datum['Total Net Worth'] + 1) - 23 < 0 ? 0 : log(datum['Total Net Worth'] + 1) - 23",
+              "as": "Log Total Net Worth"
+            },
+            {
+              "calculate": "datum['Total Net Worth'] >= 1e9 ? '$' + format(datum['Total Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
+              "as": "Formatted Total Net Worth"
+            },
+            {
+              "calculate": "datum.Number_of_Billionaires != null ? datum.Number_of_Billionaires : 0",
+              "as": "Number of Billionaires"
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "stroke": "#808080",
+            "strokeWidth": 0.5
+          },
+          "encoding": {
+            "color": {
+              "field": "Log Total Net Worth",
+              "type": "quantitative",
+              "scale": {
+                "type": "linear",
+                "scheme": "greenblue"
+              },
+              "legend": {
+                "title": "Total Net Worth (USD)",
+                "labelExpr": "datum.value == 0 ? '$0B' : datum.value == 2 ? '$10B' : datum.value == 4 ? '$50B' : datum.value == 6 ? '$500B' : datum.value == 8 ? '$5000B' : ''",
+                "values": [0, 2, 4, 6, 8]
+              }
+            },
+            "tooltip": [
+              {
+                "field": "properties.NAME",
+                "type": "nominal",
+                "title": "Country"
+              },
+              {
+                "field": "Formatted Total Net Worth",
+                "type": "nominal",
+                "title": "Total Net Worth (USD)"
+              },
+              {
+                "field": "Number of Billionaires",
+                "type": "quantitative",
+                "title": "Number of Billionaires"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "text": { "expr": "'Top ' + topN + ' Billionaires by Net Worth'" }
+      },
+      "width": 800,
+      "height": 400,
+      "data": {
+        "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
+        "format": { "type": "csv" }
+      },
+      "transform": [
+        {
+          "filter": "datum['Net Worth'] != null"
+        },
+        {
+          "calculate": "toNumber(datum['Net Worth'])",
+          "as": "Net Worth"
+        },
+        {
+          "calculate": "datum['Net Worth'] >= 1e9 ? '$' + format(datum['Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
+          "as": "Formatted Net Worth"
+        },
+        {
+          "window": [
+            {
+              "op": "rank",
+              "as": "Net Worth Rank"
+            }
+          ],
+          "sort": [
+            {
+              "field": "Net Worth",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum['Net Worth Rank'] <= topN"
+        }
+      ],
+      "mark": {
+        "type": "bar",
+        "color": "forestgreen"
+      },
+      "encoding": {
+        "x": {
+          "field": "Name",
+          "type": "nominal",
+          "axis": {
+            "labelAngle": -45,
+            "title": "Billionaire"
+          },
+          "sort": null
+        },
+        "y": {
+          "field": "Net Worth",
+          "type": "quantitative",
+          "title": "Net Worth (USD)",
+          "axis": {
+            "format": "$,.1f",
+            "labelExpr": "'$' + format(datum.value/1000000000, ',.0f') + 'B'"
+          }
+        },
+        "tooltip": [
+          { "field": "Name", "type": "nominal", "title": "Billionaire" },
+          {
+            "field": "Formatted Net Worth",
+            "type": "nominal",
+            "title": "Net Worth (USD)"
+          }
+        ]
+      }
+    }
+  ]
+}
