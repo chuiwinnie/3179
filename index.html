@@ -21,9 +21,23 @@
   <body>
     <div class="container mt-5">
       <h1 class="text-center mb-4">Global Distribution of Billionaires 2024</h1>
-      <p class="lead text-center mb-5">
+      <p class="lead text-left mb-5">
         This dashboard visualises the global distribution of billionaires'
         wealth in 2024, as well as the evolution of billionaires over time.
+        Billionaires have a significant impact on the global economy, shaping
+        industries, innovation, and even geopolitics. As the wealthiest
+        individuals, their influence extends beyond their companies and
+        ventures, reaching into philanthropic efforts and public policy.
+        Understanding the distribution and growth of billionaires around the
+        world offers valuable insights into economic disparities, regional
+        economic powerhouses, and shifts in global wealth trends.
+      </p>
+      <p class="lead text-left mb-5">
+        This visualisation provides an in-depth look at the world’s billionaires
+        in 2024, offering a snapshot of their wealth distribution, the
+        industries they dominate, and how their numbers have evolved over time.
+        Explore the interactive visualisations to delve into the dynamics of
+        global wealth and see how billionaires shape our world.
       </p>
     </div>
 
@@ -31,13 +45,23 @@
       <div class="card">
         <div class="card-body">
           <h2 class="h4">Billionaires by Region</h2>
-          <p class="text-muted mb-3">
-            The following graphs provide insights into the regional distribution
-            of billionaires, highlighting the economic disparities across
-            different areas. Click on a specific country in the map below to see
-            the top billionaires from that country in the bar chart.
+          <p class="mb-3">
+            This section offers a closer look at the geographical distribution,
+            net worth, age, and gender breakdown of the world’s billionaires.
+            Click on a country in the map below to see specific information
+            about the top billionaires from that country .
           </p>
+
           <div id="billionares_graphs"></div>
+
+          <li class="text-muted mt-3">
+            Use the "Top # Billionaires" slider to select the number of top
+            billionaires by net worth to view.
+          </li>
+          <li class="text-muted mb-3">
+            Use the "Zoom" slider to adjust the population scale for a closer
+            look at specific demographic segments in the population pyramid.
+          </li>
         </div>
       </div>
     </div>
@@ -46,11 +70,19 @@
       <div class="card">
         <div class="card-body">
           <h2 class="h4">Billionaires by Industry and Organisation</h2>
-          <p class="text-muted mb-3">
-            The following sunburst chart illustrates the distribution of
-            billionaires by industry and organisation. Select specific
-            industries using the dropdown menu below to filter the industries
-            that you want to explore.
+          <p class="mb-3">
+            The following sunburst chart provides an in-depth view of how
+            billionaire wealth is distributed across different industries and
+            their associated organisations. The chart is structured
+            hierarchically, with the central circle representing the total
+            wealth of billionaires by industry, and outer ring showing
+            individual organisations.
+          </p>
+          <p class="mb-3">
+            To tailor the chart to your interests, use the multi-select dropdown
+            "Select Industries" to filter the data by industry. Selecting one or
+            more industries will focus the chart on just those sectors, allowing
+            you to further explore the share of wealth held within each.
           </p>
 
           <div class="d-flex">
@@ -89,12 +121,28 @@
       <div class="card">
         <div class="card-body text-center">
           <h2 class="h4 text-left">Evolution of Billionaires</h2>
-          <p class="text-muted mb-3 text-left">
-            This chart tracks the changes in the number of billionaires and
-            their total net worth over the years, showcasing trends and insights
-            into wealth accumulation.
+          <p class="text mb-3 text-left">
+            Understanding how the number of billionaires and their wealth has
+            evolved over time offers valuable context to the current
+            distribution seen in 2024. This historical perspective sheds light
+            on economic changes, technological advancements and policy shifts
+            that have influenced wealth accumulation. By examining the trends
+            from 1996 to 2024, you can see how global events, such as financial
+            crises and market booms, have affected the growth in the number of
+            billionaires and their combined net worth.
           </p>
-          <div id="evolution_chart"></div>
+          <p class="text mb-3 text-left">
+            The following line chart illustrates these changes, showing the
+            total number of billionaires and their cumulative wealth over time.
+            Use the slider at the bottom to adjust the time period displayed on
+            the chart, focusing on specific years to observe detailed trends. By
+            linking the trends in this chart with the wealth distribution
+            visualisations seen in the previous sections, you can see how the
+            shifts in billionaire growth over time have contributed to the
+            economic landscape we see today.
+          </p>
+
+          <div id="evolution_chart" class="text-left"></div>
         </div>
       </div>
     </div>
