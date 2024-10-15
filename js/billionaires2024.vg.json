@@ -100,7 +100,8 @@
               "legend": {
                 "title": "Total Net Worth (USD)",
                 "labelExpr": "datum.value == 0 ? '$0B' : datum.value == 2 ? '$10B' : datum.value == 4 ? '$50B' : datum.value == 6 ? '$500B' : datum.value == 8 ? '$5000B' : ''",
-                "values": [0, 2, 4, 6, 8]
+                "values": [0, 2, 4, 6, 8],
+                "offset": -120
               }
             },
             "opacity": {
@@ -141,271 +142,288 @@
       ]
     },
     {
-      "title": {
-        "text": {
-          "expr": "selectedCountry.selected ? 'Top ' + topN + ' Billionaires in ' + selectedCountry.selected[0] : 'Top ' + topN + ' Billionaires Globally'"
-        }
-      },
-      "width": 800,
-      "height": 400,
-      "data": {
-        "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
-        "format": { "type": "csv" }
-      },
-      "transform": [
-        {
-          "filter": "datum['Net Worth'] != null"
-        },
-        {
-          "calculate": "toNumber(datum['Net Worth'])",
-          "as": "Net Worth"
-        },
-        {
-          "calculate": "datum['Net Worth'] >= 1e9 ? '$' + format(datum['Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
-          "as": "Formatted Net Worth"
-        },
-        {
-          "filter": "!selectedCountry.selected || datum.Country == selectedCountry.selected[0] "
-        },
-        {
-          "window": [
-            {
-              "op": "rank",
-              "as": "Net Worth Rank"
-            }
-          ],
-          "sort": [
-            {
-              "field": "Net Worth",
-              "order": "descending"
-            }
-          ]
-        },
-        {
-          "filter": "datum['Net Worth Rank'] <= topN"
-        }
-      ],
-      "mark": {
-        "type": "bar",
-        "color": "forestgreen"
-      },
-      "encoding": {
-        "x": {
-          "field": "Name",
-          "type": "nominal",
-          "axis": {
-            "labelAngle": -45,
-            "title": "Billionaire"
-          },
-          "sort": null
-        },
-        "y": {
-          "field": "Net Worth",
-          "type": "quantitative",
-          "title": "Net Worth (USD)",
-          "axis": {
-            "format": "$,.1f",
-            "labelExpr": "'$' + format(datum.value/1000000000, ',.0f') + 'B'"
-          }
-        },
-        "tooltip": [
-          { "field": "Name", "type": "nominal", "title": "Billionaire" },
-          {
-            "field": "Formatted Net Worth",
-            "type": "nominal",
-            "title": "Net Worth (USD)"
-          }
-        ]
-      }
-    },
-    {
-      "title": {
-        "text": {
-          "expr": "selectedCountry.selected ? 'Age and Gender Breakdown of Billionaires in ' + selectedCountry.selected[0] : 'Global Age and Gender Breakdown of Billionaires'"
-        }
-      },
-      "data": {
-        "name": "dataset",
-        "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
-        "format": { "type": "csv" }
-      },
-      "transform": [
-        {
-          "filter": "!selectedCountry.selected || datum.Country == selectedCountry.selected[0]"
-        },
-        {
-          "filter": "datum.Age != null && datum.Gender != null && datum.Age != 0"
-        },
-        {
-          "calculate": "toNumber(datum.Age)",
-          "as": "Age"
-        },
-        {
-          "calculate": "floor(datum.Age / 5) * 5 + 1 + '-' + (floor(datum.Age / 5) * 5 + 5)",
-          "as": "AgeGroup"
-        },
-        {
-          "pivot": "Gender",
-          "value": "Age",
-          "groupby": ["AgeGroup"],
-          "op": "count",
-          "key": "Gender",
-          "pivotConfig": { "fill": 0 }
-        },
-        {
-          "fold": ["F", "M"],
-          "as": ["Gender", "Population"]
-        }
-      ],
-      "spacing": 0,
       "hconcat": [
         {
+          "title": {
+            "text": {
+              "expr": "selectedCountry.selected ? 'Top ' + topN + ' Billionaires in ' + selectedCountry.selected[0] : 'Top ' + topN + ' Billionaires Globally'"
+            }
+          },
+          "width": 500,
+          "height": 400,
+          "data": {
+            "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
+            "format": { "type": "csv" }
+          },
           "transform": [
             {
-              "filter": { "field": "Gender", "equal": "F" }
-            }
-          ],
-          "title": "Female",
-          "mark": {
-            "type": "bar",
-            "clip": true
-          },
-          "encoding": {
-            "y": {
-              "field": "AgeGroup",
-              "type": "ordinal",
-              "axis": null,
+              "filter": "datum['Net Worth'] != null"
+            },
+            {
+              "calculate": "toNumber(datum['Net Worth'])",
+              "as": "Net Worth"
+            },
+            {
+              "calculate": "datum['Net Worth'] >= 1e9 ? '$' + format(datum['Net Worth'] / 1e9, ',.1f') + 'B' : '$0B'",
+              "as": "Formatted Net Worth"
+            },
+            {
+              "filter": "!selectedCountry.selected || datum.Country == selectedCountry.selected[0] "
+            },
+            {
+              "window": [
+                {
+                  "op": "rank",
+                  "as": "Net Worth Rank"
+                }
+              ],
               "sort": [
-                "101-105",
-                "96-100",
-                "91-95",
-                "86-90",
-                "81-85",
-                "76-80",
-                "71-75",
-                "66-70",
-                "61-65",
-                "56-60",
-                "51-55",
-                "46-50",
-                "41-45",
-                "36-40",
-                "31-35",
-                "26-30",
-                "21-25",
-                "16-20"
+                {
+                  "field": "Net Worth",
+                  "order": "descending"
+                }
               ]
             },
+            {
+              "filter": "datum['Net Worth Rank'] <= topN"
+            }
+          ],
+          "mark": {
+            "type": "bar",
+            "color": "forestgreen"
+          },
+          "encoding": {
             "x": {
-              "field": "Population",
-              "type": "quantitative",
-              "title": "Population",
-              "sort": "descending",
-              "scale": { "domain": [0, { "expr": "350-maxPopulation*3.45" }] }
+              "field": "Name",
+              "type": "nominal",
+              "axis": {
+                "labelAngle": -45,
+                "title": "Billionaire"
+              },
+              "sort": null
             },
-            "color": {
-              "field": "Gender",
-              "scale": { "range": ["pink", "skyblue"] }
+            "y": {
+              "field": "Net Worth",
+              "type": "quantitative",
+              "title": "Net Worth (USD)",
+              "axis": {
+                "format": "$,.1f",
+                "labelExpr": "'$' + format(datum.value/1000000000, ',.0f') + 'B'"
+              }
             },
             "tooltip": [
-              { "field": "AgeGroup", "type": "nominal", "title": "Age Group" },
+              { "field": "Name", "type": "nominal", "title": "Billionaire" },
               {
-                "field": "Population",
-                "type": "quantitative",
-                "title": "Population"
+                "field": "Formatted Net Worth",
+                "type": "nominal",
+                "title": "Net Worth (USD)"
               }
             ]
           }
         },
         {
-          "width": 5,
-          "view": { "stroke": null },
-          "mark": { "type": "text", "align": "center" },
-          "encoding": {
-            "y": {
-              "field": "AgeGroup",
-              "type": "ordinal",
-              "axis": null,
-              "sort": [
-                "101-105",
-                "96-100",
-                "91-95",
-                "86-90",
-                "81-85",
-                "76-80",
-                "71-75",
-                "66-70",
-                "61-65",
-                "56-60",
-                "51-55",
-                "46-50",
-                "41-45",
-                "36-40",
-                "31-35",
-                "26-30",
-                "21-25",
-                "16-20"
-              ]
-            },
-            "text": { "field": "AgeGroup", "type": "nominal" }
-          }
-        },
-        {
+          "title": {
+            "text": {
+              "expr": "selectedCountry.selected ? 'Age and Gender Breakdown of Billionaires in ' + selectedCountry.selected[0] : 'Age and Gender Breakdown of Billionaires Globally'"
+            }
+          },
+          "data": {
+            "name": "dataset",
+            "url": "https://raw.githubusercontent.com/chuiwinnie/3179/main/data/Billionaires_Data.csv",
+            "format": { "type": "csv" }
+          },
           "transform": [
             {
-              "filter": { "field": "Gender", "equal": "M" }
+              "filter": "!selectedCountry.selected || datum.Country == selectedCountry.selected[0]"
+            },
+            {
+              "filter": "datum.Age != null && datum.Gender != null && datum.Age != 0"
+            },
+            {
+              "calculate": "toNumber(datum.Age)",
+              "as": "Age"
+            },
+            {
+              "calculate": "floor(datum.Age / 5) * 5 + 1 + '-' + (floor(datum.Age / 5) * 5 + 5)",
+              "as": "AgeGroup"
+            },
+            {
+              "pivot": "Gender",
+              "value": "Age",
+              "groupby": ["AgeGroup"],
+              "op": "count",
+              "key": "Gender",
+              "pivotConfig": { "fill": 0 }
+            },
+            {
+              "fold": ["F", "M"],
+              "as": ["Gender", "Population"]
             }
           ],
-          "title": "Male",
-          "mark": {
-            "type": "bar",
-            "clip": true
-          },
-          "encoding": {
-            "y": {
-              "field": "AgeGroup",
-              "type": "ordinal",
-              "axis": null,
-              "sort": [
-                "101-105",
-                "96-100",
-                "91-95",
-                "86-90",
-                "81-85",
-                "76-80",
-                "71-75",
-                "66-70",
-                "61-65",
-                "56-60",
-                "51-55",
-                "46-50",
-                "41-45",
-                "36-40",
-                "31-35",
-                "26-30",
-                "21-25",
-                "16-20"
-              ]
-            },
-            "x": {
-              "field": "Population",
-              "type": "quantitative",
-              "title": "Population",
-              "scale": { "domain": [0, { "expr": "350-maxPopulation*3.45" }] }
-            },
-            "color": {
-              "field": "Gender",
-              "legend": null
-            },
-            "tooltip": [
-              { "field": "AgeGroup", "type": "nominal", "title": "Age Group" },
-              {
-                "field": "Population",
-                "type": "quantitative",
-                "title": "Population"
+          "spacing": 0,
+          "hconcat": [
+            {
+              "width": 200,
+              "height": 400,
+              "transform": [
+                {
+                  "filter": { "field": "Gender", "equal": "F" }
+                }
+              ],
+              "mark": {
+                "type": "bar",
+                "clip": true
+              },
+              "encoding": {
+                "y": {
+                  "field": "AgeGroup",
+                  "type": "ordinal",
+                  "axis": null,
+                  "sort": [
+                    "101-105",
+                    "96-100",
+                    "91-95",
+                    "86-90",
+                    "81-85",
+                    "76-80",
+                    "71-75",
+                    "66-70",
+                    "61-65",
+                    "56-60",
+                    "51-55",
+                    "46-50",
+                    "41-45",
+                    "36-40",
+                    "31-35",
+                    "26-30",
+                    "21-25",
+                    "16-20"
+                  ]
+                },
+                "x": {
+                  "field": "Population",
+                  "type": "quantitative",
+                  "title": "Female Population",
+                  "sort": "descending",
+                  "scale": {
+                    "domain": [0, { "expr": "350-maxPopulation*3.45" }]
+                  }
+                },
+                "color": {
+                  "value": "pink"
+                },
+                "tooltip": [
+                  {
+                    "field": "AgeGroup",
+                    "type": "nominal",
+                    "title": "Age Group"
+                  },
+                  {
+                    "field": "Population",
+                    "type": "quantitative",
+                    "title": "Population"
+                  }
+                ]
               }
-            ]
-          }
+            },
+            {
+              "width": 10,
+              "height": 400,
+              "view": { "stroke": null },
+              "mark": { "type": "text", "align": "center" },
+              "encoding": {
+                "y": {
+                  "field": "AgeGroup",
+                  "type": "ordinal",
+                  "axis": null,
+                  "sort": [
+                    "101-105",
+                    "96-100",
+                    "91-95",
+                    "86-90",
+                    "81-85",
+                    "76-80",
+                    "71-75",
+                    "66-70",
+                    "61-65",
+                    "56-60",
+                    "51-55",
+                    "46-50",
+                    "41-45",
+                    "36-40",
+                    "31-35",
+                    "26-30",
+                    "21-25",
+                    "16-20"
+                  ]
+                },
+                "text": { "field": "AgeGroup", "type": "nominal" }
+              }
+            },
+            {
+              "width": 200,
+              "height": 400,
+              "transform": [
+                {
+                  "filter": { "field": "Gender", "equal": "M" }
+                }
+              ],
+              "mark": {
+                "type": "bar",
+                "clip": true
+              },
+              "encoding": {
+                "y": {
+                  "field": "AgeGroup",
+                  "type": "ordinal",
+                  "axis": null,
+                  "sort": [
+                    "101-105",
+                    "96-100",
+                    "91-95",
+                    "86-90",
+                    "81-85",
+                    "76-80",
+                    "71-75",
+                    "66-70",
+                    "61-65",
+                    "56-60",
+                    "51-55",
+                    "46-50",
+                    "41-45",
+                    "36-40",
+                    "31-35",
+                    "26-30",
+                    "21-25",
+                    "16-20"
+                  ]
+                },
+                "x": {
+                  "field": "Population",
+                  "type": "quantitative",
+                  "title": "Male Population",
+                  "scale": {
+                    "domain": [0, { "expr": "350-maxPopulation*3.45" }]
+                  }
+                },
+                "color": {
+                  "value": "skyblue"
+                },
+                "tooltip": [
+                  {
+                    "field": "AgeGroup",
+                    "type": "nominal",
+                    "title": "Age Group"
+                  },
+                  {
+                    "field": "Population",
+                    "type": "quantitative",
+                    "title": "Population"
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     }
