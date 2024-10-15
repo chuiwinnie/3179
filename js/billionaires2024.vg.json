@@ -270,61 +270,85 @@
                   "filter": { "field": "Gender", "equal": "F" }
                 }
               ],
-              "mark": {
-                "type": "bar",
-                "clip": true
-              },
-              "encoding": {
-                "y": {
-                  "field": "AgeGroup",
-                  "type": "ordinal",
-                  "axis": null,
-                  "sort": [
-                    "101-105",
-                    "96-100",
-                    "91-95",
-                    "86-90",
-                    "81-85",
-                    "76-80",
-                    "71-75",
-                    "66-70",
-                    "61-65",
-                    "56-60",
-                    "51-55",
-                    "46-50",
-                    "41-45",
-                    "36-40",
-                    "31-35",
-                    "26-30",
-                    "21-25",
-                    "16-20"
-                  ]
-                },
-                "x": {
-                  "field": "Population",
-                  "type": "quantitative",
-                  "title": "Female Population",
-                  "sort": "descending",
-                  "scale": {
-                    "domain": [0, { "expr": "350-maxPopulation*3.45" }]
-                  }
-                },
-                "color": {
-                  "value": "pink"
-                },
-                "tooltip": [
-                  {
-                    "field": "AgeGroup",
-                    "type": "nominal",
-                    "title": "Age Group"
+              "layer": [
+                {
+                  "mark": {
+                    "type": "bar",
+                    "clip": true
                   },
-                  {
-                    "field": "Population",
-                    "type": "quantitative",
-                    "title": "Population"
+                  "encoding": {
+                    "y": {
+                      "field": "AgeGroup",
+                      "type": "ordinal",
+                      "axis": null,
+                      "sort": [
+                        "101-105",
+                        "96-100",
+                        "91-95",
+                        "86-90",
+                        "81-85",
+                        "76-80",
+                        "71-75",
+                        "66-70",
+                        "61-65",
+                        "56-60",
+                        "51-55",
+                        "46-50",
+                        "41-45",
+                        "36-40",
+                        "31-35",
+                        "26-30",
+                        "21-25",
+                        "16-20"
+                      ]
+                    },
+                    "x": {
+                      "field": "Population",
+                      "type": "quantitative",
+                      "title": "Female Population",
+                      "sort": "descending",
+                      "scale": {
+                        "domain": [0, { "expr": "350-maxPopulation*3.45" }]
+                      }
+                    },
+                    "color": {
+                      "value": "pink"
+                    },
+                    "tooltip": [
+                      {
+                        "field": "AgeGroup",
+                        "type": "nominal",
+                        "title": "Age Group"
+                      },
+                      {
+                        "field": "Population",
+                        "type": "quantitative",
+                        "title": "Population"
+                      }
+                    ]
                   }
-                ]
-              }
+                },
+                {
+                  "mark": {
+                    "type": "text",
+                    "align": "left",
+                    "fontStyle": "italic"
+                  },
+                  "transform": [{ "filter": "maxPopulation === 0 && !selectedCountry.selected" }],
+                  "encoding": {
+                    "text": {
+                      "value": [
+                        "Male billionaires significantly",
+                        "outnumber female billionaires,",
+                        "highlighting a gender disparity",
+                        "in the highest echelons of wealth."
+                      ]
+                    },
+                    "x": { "value": 10 },
+                    "y": { "value": 100 }
+                  }
+                }
+              ]
             },
             {
               "width": 10,
