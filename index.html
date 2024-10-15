@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billionaires Data Visualisation 2024</title>
+
     <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
@@ -15,66 +19,95 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <br />
-    <br />
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Global Distribution of Billionaires 2024</h1>
+      <p class="lead text-center mb-5">
+        This dashboard visualises the global distribution of billionaires'
+        wealth in 2024, as well as the evolution of billionaires over time.
+      </p>
+    </div>
 
-    <div id="billionares_graphs"></div>
-
-    <br />
-    <br />
-    <br />
-
-    <div id="evolution_chart"></div>
-
-    <br />
-    <br />
-    <br />
-
-    <div class="dropdown">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        Select Industries
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="all"
-            id="checkAll"
-            checked
-          />
-          <label class="form-check-label" for="checkAll">All</label>
+    <div class="container mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h4">Billionaires by Region</h2>
+          <p class="text-muted mb-3">
+            The following graphs provide insights into the regional distribution
+            of billionaires, highlighting the economic disparities across
+            different areas. Click on a specific country in the map below to see
+            the top billionaires from that country in the bar chart.
+          </p>
+          <div id="billionares_graphs"></div>
         </div>
-        <div id="industry-checkboxes"></div>
       </div>
     </div>
 
-    <div id="sunburst"></div>
+    <div class="container mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h4">Billionaires by Industry and Organisation</h2>
+          <p class="text-muted mb-3">
+            The following sunburst chart illustrates the distribution of
+            billionaires by industry and organisation. Select specific
+            industries using the dropdown menu below to filter the industries
+            that you want to explore.
+          </p>
 
-    <br />
-    <br />
-    <br />
+          <div class="d-flex align-items-start">
+            <div id="sunburst" class="flex-grow-1"></div>
+            <div class="dropdown mb-3 ml-3">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Select Industries
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="all"
+                    id="checkAll"
+                    checked
+                  />
+                  <label class="form-check-label" for="checkAll">All</label>
+                </div>
+                <div id="industry-checkboxes"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h4">Evolution of Billionaires</h2>
+          <p class="text-muted mb-3">
+            This chart tracks the changes in the number of billionaires and
+            their total net worth over the years, showcasing trends and insights
+            into wealth accumulation.
+          </p>
+          <div id="evolution_chart"></div>
+        </div>
+      </div>
+    </div>
 
     <script type="text/javascript">
       var evolutionChart = "js/evolution.vg.json";
       vegaEmbed("#evolution_chart", evolutionChart)
-        .then(function (result) {
-          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-        })
+        .then(function (result) {})
         .catch(console.error);
 
       var billionairesGraphs = "js/billionaires2024.vg.json";
       vegaEmbed("#billionares_graphs", billionairesGraphs)
-        .then(function (result) {
-          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-        })
+        .then(function (result) {})
         .catch(console.error);
     </script>
 

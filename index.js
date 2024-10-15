@@ -89,7 +89,7 @@ d3.csv("./data/Billionaires_Data.csv")
       const layout = {
         title:
           "Distribution of Billionaires' Wealth by Industry and Organisation",
-        margin: { l: 80, r: 0, b: 0, t: 100 },
+        margin: { l: 0, r: 0, b: 0, t: 50 },
         width: 800,
         height: 800,
       };
